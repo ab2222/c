@@ -1,24 +1,24 @@
 
 set opt(title) zero;
-set opt(stop) 100;# Stop time.
+set opt(stop) 100;
 set opt(ecn) 0;
 
-set opt(type) gsm;#type of link:
-set opt(secondDelay) 55;# average delay of access links in ms
+set opt(type) gsm;
+set opt(secondDelay) 55;
 
 set opt(minth) 30;
 set opt(maxth) 0;
 set opt(adaptive) 1;
 
-set opt(flows) 0;# number of long-lived TCP flows
-set opt(window) 30 ;# window for long-lived traffic
-set opt(web) 2;# number of web sessions
+set opt(flows) 0;
+set opt(window) 30;
+set opt(web) 2;
 
-set opt(quiet) 0;# popup anything
-set opt(wrap) 100 ;# wrap plots
-set opt(srcTrace) is ;# where to plot traffic
-set opt(dstTrace) bs2 ;# where to plot traffic
-set opt(gsmbuf) 10; # buffer size for gsm
+set opt(quiet) 0;
+set opt(wrap) 100;
+set opt(srcTrace) is;
+set opt(dstTrace) bs2;
+set opt(gsmbuf) 10; 
 
 set bwDL(gsm) 9600
 
