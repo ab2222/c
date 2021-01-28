@@ -20,6 +20,7 @@ set n3 [$ns node]
 $ns duplex-link $n0 $n2 200Mb 10ms DropTail
 $ns duplex-link $n1 $n2 100Mb 5ms DropTail
 $ns duplex-link $n2 $n3 1Mb 1000ms DropTail
+
 $ns queue-limit $n0 $n2 10
 $ns queue-limit $n1 $n2 10
 
@@ -29,14 +30,17 @@ set cbr0 [new Application/Traffic/CBR]
 $cbr0 attach-agent $udp0
 $cbr0 set packetSize_ 500
 $cbr0 set interval_ 0.005
+
 set udp1 [new Agent/UDP]
 $ns attach-agent $n1 $udp1
 set cbr1 [new Application/Traffic/CBR]
 $cbr1 attach-agent $udp1
+
 set udp2 [new Agent/UDP]
 $ns attach-agent $n2 $udp2
 set cbr2 [new Application/Traffic/CBR]
 $cbr2 attach-agent $udp2
+
 set null0 [new Agent/Null]
 $ns attach-agent $n3 $null0
 
