@@ -3,6 +3,14 @@ set tf [open lab3.tr w]
 $ns trace-all $tf
 set nf [open lab3.nam w]
 $ns namtrace-all $nf
+proc finish { } {
+ global ns nf tf
+ $ns flush-trace
+ close $tf
+ close $nf
+ exec nam lab3.nam &
+ exit 0
+ }
 set n0 [$ns node]
 $n0 color "magenta"
 $n0 label "src1"
@@ -43,14 +51,6 @@ set file2 [open file2.tr w]
 $tcp2 attach $file2
 $tcp0 trace cwnd_
 $tcp2 trace cwnd_
-proc finish { } {
- global ns nf tf
- $ns flush-trace
- close $tf
- close $nf
- exec nam lab3.nam &
- exit 0
- }
 $ns at 0.1 "$ftp0 start"
 $ns at 5 "$ftp0 stop"
 $ns at 7 "$ftp0 start"
