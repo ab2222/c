@@ -3,6 +3,14 @@ set nf [ open lab2.nam w ]
 $ns namtrace-all $nf
 set tf [ open lab2.tr w ]
 $ns trace-all $tf
+proc finish { } {
+global ns nf tf
+$ns flush-trace
+close $nf
+close $tf
+exec nam lab2.nam &
+exit 0
+}
 set n0 [$ns node]
 set n1 [$ns node]
 set n2 [$ns node]
@@ -15,6 +23,9 @@ $ns duplex-link $n1 $n4 50Mb 1ms DropTail
 $ns duplex-link $n2 $n4 2000Mb 1ms DropTail
 $ns duplex-link $n3 $n4 200Mb 1ms DropTail
 $ns duplex-link $n4 $n5 1Mb 1ms DropTail
+$ns queue-limit $n0 $n4 5
+$ns queue-limit $n2 $n4 3
+$ns queue-limit $n4 $n5 2
 set p1 [new Agent/Ping]
 $ns attach-agent $n0 $p1
 $p1 set packetSize_ 50000
@@ -29,22 +40,11 @@ set p4 [new Agent/Ping]
 $ns attach-agent $n3 $p4
 set p5 [new Agent/Ping] 
 $ns attach-agent $n5 $p5
-$ns queue-limit $n0 $n4 5
-$ns queue-limit $n2 $n4 3
-$ns queue-limit $n4 $n5 2
+$ns connect $p1 $p5
+$ns connect $p3 $p4
 Agent/Ping instproc recv {from rtt} {
 $self instvar node_
 puts "node [$node_ id] received answer from $from with round trip time $rtt msec"
-}
-$ns connect $p1 $p5
-$ns connect $p3 $p4
-proc finish { } {
-global ns nf tf
-$ns flush-trace
-close $nf
-close $tf
-exec nam lab2.nam &
-exit 0
 }
 $ns at 0.1 "$p1 send"
 $ns at 0.2 "$p1 send"
